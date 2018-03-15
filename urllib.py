@@ -81,112 +81,82 @@ print(resp.read().decode('utf-8'))
 
 
 #使用post
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+from urllib import parse  #导入urllib库下面的parse
+postData = parse.urlencode([  #使用urlencode生成post数据  #列表，列表里面是元组
+    (key1, val1),
+    (key2, val2),
+    (keyn, valn),
+    ])
+request.urlopen(req, data = postData.encode('utf_8'))  #使用postData发送post请求
+resp.status  #得到请求状态
+resp.reason  #得到服务器类型
+
+
+
+#使用urllib发送post请求
+#http://www.thsrc.com.tw/index.html  -->  右键，检查  -->  Network  -->Doc
+#选择  2018/03/15 14：00 从台北站出发，到台南站  进行测试  -->  点击查询
+#在doc下可以看到SearchResult
+#SearchResult  -->  Headers
+#结果如下：
+Request URL:http://www.thsrc.com.tw/tw/TimeTable/SearchResult
+Request Method:POST
+Status Code:200 OK  -->响应结果
+Remote Address:61.31.57.189:80  -->地址
+Referrer Policy:no-referrer-when-downgrade
+Cache-Control:private
+Content-Length:100124
+Content-Type:text/html; charset=utf-8
+Date:Thu, 15 Mar 2018 06:00:05 GMT
+Set-Cookie:TS01ce71a1=013b146f10f3c671dd1fd8ccd6279f888cac51569120e776622b365353d7269923fd19a9425e2eb3c5385666837b1cdff96c180320; Path=/
+X-AspNet-Version:2.0.50727
+X-AspNetMvc-Version:2.0
+X-Frame-Options:SAMEORIGIN
+X-Powered-By:ASP.NET
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding:gzip, deflate
+Accept-Language:zh-CN,zh;q=0.9
+Cache-Control:max-age=0
+Connection:keep-alive
+Content-Length:172
+Content-Type:application/x-www-form-urlencoded
+Cookie:ASP.NET_SessionId=dssg0mry0cvwlvali2lgrb45; TS01ce71a1=013b146f104dcb1fc3cdff4722cedb4ccd97c20d7b5b4058f1d01b981170e83a560ece8f7ee9bd2f29af6dbca30161ea4abe66321f; __utma=214205650.707996810.1521093232.1521093232.1521093232.1; __utmc=214205650; __utmz=214205650.1521093232.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __utmb=214205650.1.10.1521093232
+Host:www.thsrc.com.tw
+Origin:http://www.thsrc.com.tw  -->来源
+Referer:http://www.thsrc.com.tw/index.html
+Upgrade-Insecure-Requests:1
+User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36  -->浏览器
+StartStation:977abb69-413a-4ccf-a109-0272c24fd490  -->post请求的内容
+EndStation:9c5ac6ca-ec89-48f8-aab0-41b738cb1814  -->post请求的内容
+SearchDate:2018/03/15  -->post请求的内容
+SearchTime:14:00  -->post请求的内容
+SearchWay:DepartureInMandarin  -->post请求的内容
+
+#要伪装爬虫一般需要 Origin 和 User-Agent
+
+
+
+#使用urllib发送post请求
+from urllib.request import Request, urlopen
+from urllib import parse
+
+req = Request('http://www.thsrc.com.tw/tw/TimeTable/SearchResult')
+
+postData = parse.urlencode([
+    ('StartStation','977abb69-413a-4ccf-a109-0272c24fd490'),
+    ('EndStation','9c5ac6ca-ec89-48f8-aab0-41b738cb1814'),
+    ('SearchDate','2018/03/15'),
+    ('SearchTime','14:00'),
+    ('SearchWay','DepartureInMandarin'),
+    ])
+
+req.add_header('Origin', 'http://www.thsrc.com.tw')
+req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36')
+
+resp = urlopen(req, data = postData.encode('utf8'))
+
+import io  
+import sys  
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
+
+print(resp.read().decode('utf8'))
