@@ -26,6 +26,11 @@ try:
         sql = 'select `urlname`,`urlhref` from `urls` where `id` is not null'  #查询语句
         count = cursor.execute(sql)
         print(count)  #168
+#下面这样写也可以，但是*占用资源较多
+#         sql = 'select * from urls where `id` is not null'
+#         print(cursor.execute(sql))  #168
+#         sql = 'select * from urls'
+#         print(cursor.execute(sql))  #168     
         
         result = cursor.fetchmany(3)  #得到第1--3条
         print(result)  #(('Wikipedia', 'https://en.wikipedia.org/wiki/Wikipedia'), ('free', 'https://en.wikipedia.org/wiki/Free_content'), ('encyclopedia', 'https://en.wikipedia.org/wiki/Encyclopedia'))
