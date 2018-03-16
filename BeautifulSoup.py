@@ -83,26 +83,3 @@ print(data)
 #或者改成：
 data = soup.findAll('a', href=re.compile(r'^http://example[.]com/'))
 print(data)
-
-
-
-#
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
