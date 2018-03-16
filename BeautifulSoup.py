@@ -66,6 +66,43 @@ Tillie;
 and they lived at the bottom of a well.
 """
 
+import re
+for tag in soup.find_all(re.compile('^b')):  #以b开头  #find_all方法接收一个字符串
+    print(tag.name)
+'''
+body
+b
+'''
+
+data = soup.findAll('a', href=re.compile(r'^http://example.com/'))  #在a标签中查找 href="http://example.com/ 开头的
+print(data)  #[<a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>, <a class="sister" href="http://example.com/lacie" id="link2">Lacie</a>, <a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>]
+#但这样写也能够匹配出  <a class="sister" href="http://exampleScom/elsie" id="link1">Elsie</a>  #因为.代表任意
+#所以应该改写成：
+data = soup.findAll('a', href=re.compile(r'^http://example\.com/'))
+print(data)
+#或者改成：
+data = soup.findAll('a', href=re.compile(r'^http://example[.]com/'))
+print(data)
+
+
+
+#
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
